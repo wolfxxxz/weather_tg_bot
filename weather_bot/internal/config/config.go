@@ -30,7 +30,6 @@ func (v *Config) ParseConfig(path string, log *logrus.Logger) error {
 	err := godotenv.Load(path)
 	if err != nil {
 		errMsg := fmt.Sprintf(" %s", err.Error())
-		//return apperrors.EnvConfigParseError.AppendMessage(errMsg)
 		log.Info("gotoenv could not find .env", errMsg)
 	}
 
