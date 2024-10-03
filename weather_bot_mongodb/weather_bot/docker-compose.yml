@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:4.4.20-rc0
+    container_name: mongo_bot
+    ports:
+      - "27017:27017"
+    volumes:
+      - ${HOME}/collection_data/mongobot:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  weather_bot:
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    container_name: weather_bot
+    network_mode: host
+    environment:
+      - TZ=Europe/Kiev
+    restart: unless-stopped
+
+
